@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Accordion } from './components/Accordion';
 import { ProductList } from './components/ProductList/ProductList';
 import { Tabs } from './components/Tabs/Tabs';
@@ -10,7 +10,9 @@ import {
   CheckCircle2,
   BookOpen,
   ChevronRight,
-  Sparkles,
+  Sprout,
+  Sun,
+  Moon,
 } from 'lucide-react';
 import './App.css';
 
@@ -18,14 +20,26 @@ export function App() {
   // State theo dõi panel đang mở ở demo Accordion
   const [activeAccordionId, setActiveAccordionId] = useState<string | null>('panel-1');
 
+  // State quản lý chủ đề: Mặc định là 3. Warm Earth & Nature Minimal
+  const [theme, setTheme] = useState<'warm-earth' | 'dark-glow'>('warm-earth');
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === 'warm-earth' ? 'dark-glow' : 'warm-earth'));
+  };
+
   return (
     <div className="app-layout">
       {/* Top Navigation Bar */}
       <header className="app-header">
         <div className="header-container">
           <div className="header-brand">
-            <div className="brand-logo">
-              <Sparkles className="w-5 h-5" />
+            {/* Logo Thiên nhiên & Mầm cây tối giản (Warm Earth & Nature Minimal) */}
+            <div className="brand-logo nature-logo" title="Warm Earth & Nature Minimal Logo">
+              <Sprout className="w-6 h-6 nature-icon" />
             </div>
             <div>
               <h1 className="brand-title">Lập Trình Web Nâng Cao</h1>
@@ -33,10 +47,32 @@ export function App() {
             </div>
           </div>
 
-          <div className="header-tags">
-            <span className="badge badge-indigo">React 19 + TypeScript</span>
-            <span className="badge badge-emerald">Context API</span>
-            <span className="badge badge-purple">Generic Hooks</span>
+          <div className="header-actions">
+            {/* Nút chuyển đổi Theme linh hoạt */}
+            <button
+              type="button"
+              className="theme-toggle-btn"
+              onClick={toggleTheme}
+              title={`Đang dùng: ${theme === 'warm-earth' ? 'Warm Earth Minimal 🌿' : 'Deep Dark Glow ⚡'}. Bấm để đổi!`}
+            >
+              {theme === 'warm-earth' ? (
+                <>
+                  <Sun className="w-4 h-4 theme-icon-sun" />
+                  <span>Warm Earth 🌿</span>
+                </>
+              ) : (
+                <>
+                  <Moon className="w-4 h-4 theme-icon-moon" />
+                  <span>Deep Dark ⚡</span>
+                </>
+              )}
+            </button>
+
+            <div className="header-tags">
+              <span className="badge badge-indigo">React 19 + TypeScript</span>
+              <span className="badge badge-emerald">Context API</span>
+              <span className="badge badge-purple">Generic Hooks</span>
+            </div>
           </div>
         </div>
       </header>
@@ -136,7 +172,7 @@ export function App() {
                     <Accordion.Item id="panel-1">
                       <Accordion.Header>
                         <span className="panel-title-text">
-                          <CheckCircle2 className="w-5 h-5 text-indigo-500 inline mr-2" />
+                          <CheckCircle2 className="w-5 h-5 inline mr-2" style={{ color: 'var(--accent-cyan)' }} />
                           1. Compound Component Pattern là gì? Vì sao nên áp dụng?
                         </span>
                       </Accordion.Header>
@@ -165,7 +201,7 @@ export function App() {
                     <Accordion.Item id="panel-2">
                       <Accordion.Header>
                         <span className="panel-title-text">
-                          <HelpCircle className="w-5 h-5 text-indigo-500 inline mr-2" />
+                          <HelpCircle className="w-5 h-5 inline mr-2" style={{ color: 'var(--accent-purple)' }} />
                           2. Cơ chế đảm bảo &quot;Chỉ mở 1 panel tại một thời điểm&quot; hoạt động như thế nào?
                         </span>
                       </Accordion.Header>
@@ -198,7 +234,7 @@ const toggleItem = (id: string) => {
                     <Accordion.Item id="panel-3">
                       <Accordion.Header>
                         <span className="panel-title-text">
-                          <BookOpen className="w-5 h-5 text-indigo-500 inline mr-2" />
+                          <BookOpen className="w-5 h-5 inline mr-2" style={{ color: 'var(--accent-cyan)' }} />
                           3. Chính sách bảo hành &amp; đổi trả sản phẩm công nghệ
                         </span>
                       </Accordion.Header>
@@ -228,7 +264,7 @@ const toggleItem = (id: string) => {
                     <Accordion.Item id="panel-4">
                       <Accordion.Header>
                         <span className="panel-title-text">
-                          <Code2 className="w-5 h-5 text-indigo-500 inline mr-2" />
+                          <Code2 className="w-5 h-5 inline mr-2" style={{ color: 'var(--accent-purple)' }} />
                           4. Cấu trúc lồng ghép an toàn với TypeScript &amp; Accessibility (a11y)
                         </span>
                       </Accordion.Header>

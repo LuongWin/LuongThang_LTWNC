@@ -1,3 +1,105 @@
+/* ====================================================
+   Design System Tokens & Global Styles
+   Chủ đề mặc định: 3. Warm Earth & Nature Minimal (Gam màu đất ấm cúng)
+   Hỗ trợ chuyển đổi: 2. Deep Dark Glow / AI Interface
+==================================================== */
+
+/* MẶC ĐỊNH: 3. Warm Earth & Nature Minimal (Gam màu đất ấm cúng) */
+:root,
+[data-theme="warm-earth"] {
+  /* 60% Nền chủ đạo (Màu kem / Cát nhạt) */
+  --bg-dark: #FDFBF7;
+  --bg-surface: #FAF8F5;
+  --bg-radial: radial-gradient(circle at 50% 0%, #F5EFE6 0%, #FDFBF7 60%);
+
+  /* 30% Cấu trúc & Bề mặt (Xanh rêu trầm & Nâu Espresso) */
+  --bg-card: #FFFFFF;
+  --bg-card-glass: rgba(255, 255, 255, 0.88);
+  --bg-card-glass-hover: #FFFFFF;
+  --border-color: #E7E2DA;
+  --border-hover: #D5CEBF;
+
+  /* 10% Điểm nhấn (Cam đất nung / Terracotta & Xanh rêu) */
+  --accent-purple: #E07A5F; /* Map sang Terracotta */
+  --accent-cyan: #2C3E35;   /* Map sang Moss Green */
+  --accent-terracotta: #E07A5F;
+  --accent-moss: #2C3E35;
+  --accent-amber: #D97706;
+  --accent-gradient: linear-gradient(135deg, #E07A5F 0%, #D97706 100%);
+  --accent-gradient-hover: linear-gradient(135deg, #D4694E 0%, #B45309 100%);
+  --glow-purple: 0 4px 20px rgba(224, 122, 95, 0.22);
+  --glow-cyan: 0 4px 20px rgba(44, 62, 53, 0.15);
+  --glow-card-active: 0 8px 30px rgba(224, 122, 95, 0.15), 0 1px 3px rgba(44, 62, 53, 0.05);
+
+  /* Chữ & Phân cấp thị giác */
+  --text-primary: #262322;   /* Nâu Espresso sâu */
+  --text-secondary: #5C554F; /* Nâu tro xám nhạt */
+  --text-muted: #8C827A;
+
+  /* Typography: Serif cho Tiêu đề để tạo chiều sâu nghệ thuật */
+  --font-heading: 'Lora', Georgia, serif;
+  --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+
+  /* Màu chức năng tự nhiên */
+  --color-success: #2C3E35;
+  --color-warning: #D97706;
+  --color-danger: #C53030;
+  --color-info: #3182CE;
+
+  --color-scheme: light;
+}
+
+/* CHỦ ĐỀ PHỤ: 2. Deep Dark Glow / AI Interface (Giao diện tối & ánh hào quang) */
+[data-theme="dark-glow"] {
+  /* 60% Nền đen than / Slate tối */
+  --bg-dark: #090a0f;
+  --bg-surface: #0b0f19;
+  --bg-radial: radial-gradient(circle at 50% -20%, #1e1b4b 0%, #090a0f 65%);
+
+  /* 30% Cấu trúc xám tối sâu */
+  --bg-card: #1e293b;
+  --bg-card-glass: rgba(30, 41, 59, 0.65);
+  --bg-card-glass-hover: rgba(30, 41, 59, 0.85);
+  --border-color: #334155;
+  --border-hover: #475569;
+
+  /* 10% Điểm nhấn: Tím Cyberpunk & Xanh Neon */
+  --accent-purple: #8b5cf6;
+  --accent-cyan: #06b6d4;
+  --accent-terracotta: #8b5cf6;
+  --accent-moss: #06b6d4;
+  --accent-amber: #06b6d4;
+  --accent-gradient: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%);
+  --accent-gradient-hover: linear-gradient(135deg, #7c3aed 0%, #0891b2 100%);
+  --glow-purple: 0 0 24px rgba(139, 92, 246, 0.3);
+  --glow-cyan: 0 0 24px rgba(6, 182, 212, 0.3);
+  --glow-card-active: 0 8px 32px rgba(139, 92, 246, 0.15), 0 0 1px rgba(6, 182, 212, 0.3);
+
+  /* Chữ */
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  --font-heading: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+  --color-info: #06b6d4;
+
+  --color-scheme: dark;
+}
+
+:root {
+  /* Hệ thống Spacing & Radius dùng chung */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+  --transition-fast: 180ms ease-out;
+}
+
 *,
 *::before,
 *::after {
@@ -6,11 +108,38 @@
 
 body {
   margin: 0;
-  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  background-color: #f8fafc;
-  color: #0f172a;
+  min-height: 100vh;
+  font-family: var(--font-body);
+  background-color: var(--bg-dark);
+  background-image: var(--bg-radial);
+  background-attachment: fixed;
+  color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+h1, h2, h3, .brand-title, .section-title {
+  font-family: var(--font-heading);
+}
+
+/* Tùy chỉnh Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-purple);
 }
 
 button {

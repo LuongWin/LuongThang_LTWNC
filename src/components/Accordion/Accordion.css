@@ -1,37 +1,40 @@
 /* ====================================================
    Accordion Compound Component Styles
-   Thiết kế hiện đại, sang trọng theo tiêu chuẩn Web UI
+   Phong cách: Deep Dark Glow / AI Interface
 ==================================================== */
 
 .accordion-container {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
   width: 100%;
 }
 
 .accordion-item {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 14px;
+  background: var(--bg-card-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
   overflow: hidden;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+  transition: all var(--transition-fast);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
 }
 
 .accordion-item:hover:not(.is-disabled) {
-  border-color: #cbd5e1;
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+  border-color: var(--border-hover);
+  background: var(--bg-card-glass-hover);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
 }
 
 .accordion-item.is-open {
-  border-color: #6366f1;
-  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.12);
-  background: #ffffff;
+  border-color: var(--accent-purple);
+  box-shadow: 0 0 28px rgba(139, 92, 246, 0.25), 0 8px 24px rgba(0, 0, 0, 0.4);
+  background: rgba(30, 41, 59, 0.85);
 }
 
 .accordion-item.is-disabled {
-  opacity: 0.55;
+  opacity: 0.4;
   cursor: not-allowed;
 }
 
@@ -48,24 +51,25 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 18px 22px;
-  font-size: 1.025rem;
+  padding: 20px 24px;
+  font-size: 1.05rem;
   font-weight: 600;
-  color: #1e293b;
+  color: var(--text-primary);
   cursor: pointer;
   user-select: none;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  min-height: 52px; /* Đảm bảo touch-target >= 44px */
+  transition: background-color var(--transition-fast), color var(--transition-fast);
 }
 
 .accordion-trigger:focus-visible {
-  outline: 2px solid #6366f1;
+  outline: 2px solid var(--accent-cyan);
   outline-offset: -2px;
 }
 
 .accordion-trigger.is-expanded {
-  color: #4f46e5;
-  background-color: #f8faff;
-  border-bottom: 1px solid #eef2ff;
+  color: #c4b5fd;
+  background-color: rgba(139, 92, 246, 0.08);
+  border-bottom: 1px solid rgba(139, 92, 246, 0.2);
 }
 
 .accordion-trigger:disabled {
@@ -77,25 +81,28 @@
   align-items: center;
   gap: 12px;
   text-align: left;
-  line-height: 1.45;
+  line-height: 1.5;
 }
 
 .accordion-icon-wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: #f1f5f9;
-  color: #64748b;
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.2s ease, color 0.2s ease;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-sm);
+  background: rgba(51, 65, 85, 0.6);
+  color: var(--text-secondary);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
   flex-shrink: 0;
 }
 
 .accordion-trigger.is-expanded .accordion-icon-wrapper {
-  background: #e0e7ff;
-  color: #4f46e5;
+  background: rgba(139, 92, 246, 0.25);
+  color: var(--accent-cyan);
+  border-color: rgba(139, 92, 246, 0.5);
+  box-shadow: 0 0 12px rgba(6, 182, 212, 0.35);
   transform: rotate(180deg);
 }
 
@@ -106,10 +113,11 @@
 }
 
 .accordion-panel {
-  color: #475569;
+  color: #cbd5e1;
   font-size: 0.95rem;
   line-height: 1.65;
-  animation: accordionSlideDown 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: accordionGlowFade 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+  background: rgba(15, 23, 42, 0.4);
 }
 
 .accordion-panel.is-hidden {
@@ -117,17 +125,53 @@
 }
 
 .accordion-panel-inner {
-  padding: 18px 22px 22px 22px;
-  background-color: #ffffff;
+  padding: 22px 24px 24px 24px;
 }
 
-@keyframes accordionSlideDown {
+@keyframes accordionGlowFade {
   from {
     opacity: 0;
-    transform: translateY(-8px);
+    transform: translateY(-6px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* ====================================================
+   Quy tắc đặc thù Warm Earth cho Accordion
+==================================================== */
+[data-theme="warm-earth"] .accordion-item {
+  box-shadow: 0 2px 10px rgba(38, 35, 34, 0.04);
+}
+
+[data-theme="warm-earth"] .accordion-item.is-open {
+  border-color: #E07A5F;
+  box-shadow: 0 4px 20px rgba(224, 122, 95, 0.15);
+  background: #FFFFFF;
+}
+
+[data-theme="warm-earth"] .accordion-trigger.is-expanded {
+  color: #E07A5F;
+  background-color: #FDF3E7;
+  border-bottom: 1px solid #F8D7B0;
+}
+
+[data-theme="warm-earth"] .accordion-icon-wrapper {
+  background: #FAF8F5;
+  color: #8C827A;
+  border: 1px solid #E7E2DA;
+}
+
+[data-theme="warm-earth"] .accordion-trigger.is-expanded .accordion-icon-wrapper {
+  background: #E07A5F;
+  color: #FFFFFF;
+  border-color: #E07A5F;
+  box-shadow: 0 2px 8px rgba(224, 122, 95, 0.3);
+}
+
+[data-theme="warm-earth"] .accordion-panel {
+  background: #FAF8F5;
+  color: #5C554F;
 }
