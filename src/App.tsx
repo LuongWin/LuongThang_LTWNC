@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Accordion } from './components/Accordion';
-import { ProductList } from './components/ProductList/ProductList';
 import { Tabs } from './components/Tabs/Tabs';
+import { ProductsView } from './features/products/ProductsView';
+import { CartDrawer } from './features/cart/CartDrawer';
+import { CartBadgeButton } from './features/cart/CartBadgeButton';
 import {
   Package,
   Layers,
@@ -33,6 +35,9 @@ export function App() {
 
   return (
     <div className="app-layout">
+      {/* Slide-over Drawer cho Giỏ Hàng Redux Toolkit */}
+      <CartDrawer />
+
       {/* Top Navigation Bar */}
       <header className="app-header">
         <div className="header-container">
@@ -43,11 +48,14 @@ export function App() {
             </div>
             <div>
               <h1 className="brand-title">Lập Trình Web Nâng Cao</h1>
-              <p className="brand-subtitle">Compound Component Accordion & Custom Hook usePagination&lt;T&gt;</p>
+              <p className="brand-subtitle">Redux Toolkit Module Giỏ Hàng &bull; Compound Accordion &bull; usePagination&lt;T&gt;</p>
             </div>
           </div>
 
           <div className="header-actions">
+            {/* Nút Giỏ hàng kết nối Redux Store */}
+            <CartBadgeButton />
+
             {/* Nút chuyển đổi Theme linh hoạt */}
             <button
               type="button"
@@ -69,9 +77,9 @@ export function App() {
             </button>
 
             <div className="header-tags">
-              <span className="badge badge-indigo">React 19 + TypeScript</span>
-              <span className="badge badge-emerald">Context API</span>
-              <span className="badge badge-purple">Generic Hooks</span>
+              <span className="badge badge-indigo">Redux Toolkit + RTK Query</span>
+              <span className="badge badge-emerald">React 19 + TypeScript</span>
+              <span className="badge badge-purple">Feature-Based</span>
             </div>
           </div>
         </div>
@@ -83,54 +91,22 @@ export function App() {
           <div className="tabs-nav-wrapper">
             <Tabs.List className="main-tabs-list">
               <Tabs.Tab id="products" icon={<Package className="w-4 h-4" />}>
-                1. Phân Trang Sản Phẩm (usePagination)
+                1. Danh Sách Sản Phẩm &amp; Giỏ Hàng
               </Tabs.Tab>
               <Tabs.Tab id="accordion" icon={<Layers className="w-4 h-4" />}>
                 2. Compound Accordion (Single-Open)
               </Tabs.Tab>
               <Tabs.Tab id="architecture" icon={<Code2 className="w-4 h-4" />}>
-                3. Phân Tích Kiến Trúc Context API
+                3. Phân Tích Kiến Trúc Context API &amp; Redux
               </Tabs.Tab>
             </Tabs.List>
           </div>
 
           <Tabs.Panels>
-            {/* TAB 1: PRODUCT LIST VỚI usePagination<T> */}
+            {/* TAB 1: DANH SÁCH SẢN PHẨM & GIỎ HÀNG */}
             <Tabs.Panel id="products">
               <section className="section-card">
-                <div className="section-intro">
-                  <div className="intro-badge">Yêu cầu 2</div>
-                  <h2 className="section-title">
-                    Custom Hook <code>usePagination&lt;T&gt;</code> cho Danh Sách Sản Phẩm
-                  </h2>
-                  <p className="section-desc">
-                    Hook Generic nhận mảng dữ liệu <code>T[]</code> và số item/trang. Trả về
-                    trang hiện tại, tổng số trang, các hàm <code>nextPage</code>, <code>prevPage</code>, 
-                    <code>goToPage</code>, mảng dữ liệu trang <code>currentData</code> cùng các cờ trạng thái.
-                  </p>
-                </div>
-
-                {/* Khối code minh họa nhanh */}
-                <div className="code-callout">
-                  <div className="code-callout-header">
-                    <span>Cách sử dụng Hook:</span>
-                  </div>
-                  <pre className="code-snippet">
-{`const {
-  currentPage,
-  totalPages,
-  nextPage,
-  prevPage,
-  goToPage,
-  currentData,
-  canNextPage,
-  canPrevPage
-} = usePagination<Product>(productsList, 6);`}
-                  </pre>
-                </div>
-
-                {/* Component danh sách sản phẩm */}
-                <ProductList />
+                <ProductsView />
               </section>
             </Tabs.Panel>
 
@@ -374,6 +350,48 @@ const toggleItem = (id: string) => {
                     </div>
                   </div>
                 </div>
+
+                <div className="architecture-diagram-card" style={{ marginTop: '2rem' }}>
+                  <h3>So Sánh Kiến Trúc: createAsyncThunk vs RTK Query (Bài Tập Tuần 3)</h3>
+                  <div className="comparison-table-wrapper" style={{ marginTop: '1rem' }}>
+                    <table className="comparison-table">
+                      <thead>
+                        <tr>
+                          <th>Tiêu Chí</th>
+                          <th>createAsyncThunk (Mặc Định Chuẩn)</th>
+                          <th>RTK Query (Điểm Cộng Nâng Cao)</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><strong>Bản chất</strong></td>
+                          <td>Tạo async action thunk truyền thống, dispatch qua Redux store</td>
+                          <td>Data fetching &amp; caching layer chuyên biệt, tự động sinh custom hooks</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Quản lý State</strong></td>
+                          <td>Lưu trong <code>productsSlice</code> thông qua <code>extraReducers</code> (pending/fulfilled/rejected)</td>
+                          <td>Tự động quản lý trong cache slice riêng (<code>productsApi.reducer</code>)</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Caching &amp; Deduplication</strong></td>
+                          <td>Lập trình viên tự quản lý (kiểm tra status idle trước khi fetch)</td>
+                          <td>Tự động cache theo endpoint &amp; arguments, loại trừ trùng lặp request</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Loading &amp; Error Flag</strong></td>
+                          <td>Lưu thủ công trong slice (<code>status === 'loading'</code>, <code>error</code>)</td>
+                          <td>Cung cấp sẵn từ Hook: <code>isLoading</code>, <code>isFetching</code>, <code>error</code>, <code>refetch</code></td>
+                        </tr>
+                        <tr>
+                          <td><strong>Tổ chức thư mục</strong></td>
+                          <td><code>features/products/productsSlice.ts</code></td>
+                          <td><code>features/products/productsApi.ts</code></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </section>
             </Tabs.Panel>
           </Tabs.Panels>
@@ -382,7 +400,7 @@ const toggleItem = (id: string) => {
 
       {/* Footer */}
       <footer className="app-footer">
-        <p>Bài thực hành Lập Trình Web Nâng Cao &bull; Giảng dạy về Compound Components &amp; React Custom Hooks</p>
+        <p>Bài thực hành Lập Trình Web Nâng Cao &bull; Redux Toolkit, RTK Query, Compound Components &amp; React Custom Hooks</p>
       </footer>
     </div>
   );

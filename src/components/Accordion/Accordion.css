@@ -113,7 +113,7 @@
 }
 
 .accordion-panel {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-size: 0.95rem;
   line-height: 1.65;
   animation: accordionGlowFade 0.24s cubic-bezier(0.16, 1, 0.3, 1);
@@ -173,5 +173,5 @@
 
 [data-theme="warm-earth"] .accordion-panel {
   background: #FAF8F5;
-  color: #5C554F;
+  color: #373330;
 }

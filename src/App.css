@@ -346,13 +346,19 @@
 }
 
 .faq-content {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-size: 0.95rem;
   line-height: 1.7;
 }
 
 .faq-content p {
   margin: 0 0 12px 0;
+  color: inherit;
+}
+
+.faq-content strong {
+  color: var(--text-primary);
+  font-weight: 700;
 }
 
 .faq-content ul {
@@ -362,6 +368,19 @@
 
 .faq-content li {
   margin-bottom: 8px;
+  color: inherit;
+}
+
+.faq-content li strong {
+  color: var(--text-primary);
+}
+
+.faq-content code {
+  color: var(--accent-purple);
+  background: rgba(224, 122, 95, 0.1);
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  font-size: 0.88em;
 }
 
 .policy-grid {
@@ -690,3 +709,27 @@
   color: #E07A5F;
   filter: none;
 }
+
+/* Tối ưu độ tương phản cho nội dung Accordion trong Warm Earth */
+[data-theme="warm-earth"] .faq-content {
+  color: #373330;
+}
+
+[data-theme="warm-earth"] .faq-content p,
+[data-theme="warm-earth"] .faq-content li {
+  color: #443F3C;
+  font-weight: 450;
+}
+
+[data-theme="warm-earth"] .faq-content strong {
+  color: #1E1B1A;
+  font-weight: 700;
+}
+
+[data-theme="warm-earth"] .faq-content code {
+  color: #C05621;
+  background: #FDF3E7;
+  border: 1px solid #F8D7B0;
+  font-weight: 600;
+}
+

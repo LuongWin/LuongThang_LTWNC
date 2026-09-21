@@ -21,9 +21,11 @@
   },
   "homepage": "https://github.com/LuongWin/LuongThang_LTWNC#readme",
   "dependencies": {
+    "@reduxjs/toolkit": "^2.12.0",
     "lucide-react": "^1.45.0",
     "react": "^19.3.0",
-    "react-dom": "^19.3.0"
+    "react-dom": "^19.3.0",
+    "react-redux": "^9.3.0"
   },
   "devDependencies": {
     "@types/react": "^19.3.0",
